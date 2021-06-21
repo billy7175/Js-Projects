@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <title>Document</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+
+    <!-- modal -->
+    <div class="modal-overlay">
+      <div class="add-form">
+        <div>
+          <label for="">Name</label>
+          <input id="user-name" type="text">
+        </div>
+        <div>
+          <label for="">Age</label>
+          <input id="user-age" type="number" max="100" min="1">
+        </div>
+        <div>
+          <label for="">Address</label>
+          <input id="user-address" type="text">
+        </div>
+        <div>
+          <label for="">Class</label>
+          <input id="user-class" type="text">
+        </div>
+        <div>
+          <button class="add-user">Add User</button>
+          <button class="cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <!-- // modal -->
+
+    <div class="root">
+      <div class="container">
+        <div class="left">
+          <aside>
+            <div class="mb-3">
+              <p class="header-vh"><i class="fa fa-plus"></i></p>
+            </div>
+
+            <!-- icon-list -->
+            <ul class="icon-list">
+            </ul>
+          </aside>
+          <nav>
+            <div class="mb-3">
+              <p class="sub-title header-vh"><strong>ERP</strong> <span>Management</span></p>
+            </div>
+            <ul class="menu-list">
+              
+            </ul>
+          </nav>
+        </div>
+        <div class="center">
+          <div>
+            <header class="header-vh">
+              <div>
+                <input type="text" placeholder="Enter the name.">
+              </div>
+              <ul>
+                <li></li>
+              </ul>
+            </header>
+            <main>
+              <div class="table-container">
+                <div>
+                  <button class="add-btn">Register</button>
+                </div>
+                <table class="user-table">
+                  <thead>
+                    <tr>
+                      <td>Number</td>
+                      <td>Name</td>
+                      <td>Age</td>
+                      <td>Address</td>
+                      <td>Class</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody class="user-list">
+                  </tbody>
+                </table>
+              </div>
+            </main>
+          </div>
+        </div>
+        <div class="right">asd</div>
+      </div> <!-- the end of container -->
+    </div> <!-- the end of root -->
+    <script src="src/main.js"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>   
+  <script>
+ 
+  </script>
+  </body>
+</html>
