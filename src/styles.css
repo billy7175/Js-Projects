@@ -124,14 +124,22 @@ main {
 
 .user-table  {
   width:100%;
-  border:1px solid red;
+  border-collapse: collapse;
+}
 
+.user-table thead {
+  background:rgb(80, 140, 805);
 }
 
 .user-table tr td:first-child {
   text-align: center;
-
 }
+.user-table td {
+  padding-top:5px;
+  padding-bottom:5px;
+}
+
+
 
 
 
