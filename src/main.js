@@ -183,6 +183,9 @@ const App = (function (ItemCtrl, UICtrl) {
   };
 
   function deleteUser(e){
+    
+    let confirm = confirm("Do you want to delete a user?");
+    confirm
     if(e.target.classList.contains('delete-user')){
 
       const id = e.target.parentNode.parentNode.firstElementChild.textContent
