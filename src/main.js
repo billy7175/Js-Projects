@@ -8,7 +8,7 @@ const ItemCtrl = (function () {
   };
   const data = {
     items: [
-      "Dashboadrd",
+      "Students",
       "Products",
       "Inventory Management",
       "Assets Management",

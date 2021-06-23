@@ -139,6 +139,40 @@ main {
   padding-bottom:5px;
 }
 
+.user-table tr:hover {
+  background:rgba(0,0,0,0.1);
+}
+
+.update-user{
+  width:70px;
+  padding:5px;
+  border:none;
+  transition:.1s ease;
+  background-color:seagreen;
+  color:#fff;
+  text-align:center;
+}
+
+.update-user:hover {
+  font-weight:bold;
+}
+
+.delete-user {
+  width:70px;
+  padding:5px;
+  border:none;
+  background-color:#DE3B49;
+  color:#fff;
+}
+
+.delete-user:hover  {
+  font-weight:700;
+}
+
+.add-btn {
+  float: right;
+}
+
 
 
 
@@ -174,7 +208,6 @@ main {
   left:50%;
   transform: translate(-50%,-50%);
 }
-
 
 
 
