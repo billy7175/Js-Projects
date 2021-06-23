@@ -66,22 +66,45 @@ const ItemCtrl = (function () {
       data.users.push(newItem);
       return newItem;
     },
-    deleteUser: function(id){
+    deleteUser: function (id) {
       id = parseInt(id);
       data.users.forEach((user) => {
-        if(user.id === id){
+        if (user.id === id) {
           const deleteUser = user;
-          data.users.splice(deleteUser.id,1);
+          data.users.splice(deleteUser.id, 1);
           console.log(data.user);
         }
       });
     },
+    findUpdateUser: function(id){
+      id = parseInt(id);
+      let found = '';
+      data.users.forEach((user) => {
+        if(user.id === id){
+          found = user;
+        }
+      });
+      return found;
+    },
+    updateUserList: function(id, inputs){
+
+      data.users.forEach((user) => {
+        if(user.id === id){
+          user.id = id;
+          user.name = inputs.name;
+          user.age = inputs.age;
+          user.address = inputs.address;
+          user.category = inputs.category;
+        }
+      });
+      return data.users;
+    },
     logData: function () {
       return data;
     },
-    userData: function(){
+    userData: function () {
       return data.users;
-    }
+    },
   };
 })();
 
@@ -92,12 +115,15 @@ const UICtrl = (function () {
     userList: ".user-list",
     addBtn: ".add-btn",
     addUser: ".add-user",
+    updateUser: ".update-user",
+    updateUserBtn : '.update-user-btn',
     cancelBtn: ".cancel-btn",
     modal: ".modal-overlay",
     userName: "#user-name",
     userAge: "#user-age",
     userAddress: "#user-address",
     userClass: "#user-class",
+    name: document.querySelector(".user-name"),
   };
   return {
     populateIconList: function () {
@@ -159,6 +185,44 @@ const UICtrl = (function () {
         .querySelector(UISelectors.userList)
         .insertAdjacentElement("beforeend", tr);
     },
+    updateUserToModal(id){
+      UICtrl.showModal();
+      const userToUpdate = ItemCtrl.findUpdateUser(id);
+
+      // populateUserToUpdate to Modal UI;
+      document.querySelector(UISelectors.userName).value = userToUpdate.name;
+      document.querySelector(UISelectors.userAge).value = userToUpdate.age;
+      document.querySelector(UISelectors.userAddress).value = userToUpdate.address;
+      document.querySelector(UISelectors.userClass).value = userToUpdate.category;
+      document.querySelector(UISelectors.updateUserBtn).id = userToUpdate.id;
+    },
+    updateUserListToUI: function (users){
+      let html = "";
+      users.forEach((user) => {
+        html += `<tr>
+        <td>${user.id}</td>
+        <td>${user.name}</td>
+        <td>${user.age}</td>
+        <td>${user.address}</td>
+        <td>${user.category}</td>
+        <td><button class="update-user">UPDATE</button></td>
+        <td><button class="delete-user">DELETE</button></td>
+      </tr>`;
+      });
+
+      document.querySelector(UISelectors.userList).innerHTML = html;
+    },
+    clearInputs: function () {
+      document.querySelector(UISelectors.userName).value = "";
+      document.querySelector(UISelectors.userAge).value = "";
+      document.querySelector(UISelectors.userAddress).value = "";
+      document.querySelector(UISelectors.userClass).value = "";
+    },
+    validateInputs() {
+      // if(UISelectors.name.value = ''){
+      //   alert("please fill the name.");
+      // }
+    },
     getSelectors() {
       return UISelectors;
     },
@@ -177,36 +241,75 @@ const App = (function (ItemCtrl, UICtrl) {
     document
       .querySelector(UISelectors.addUser)
       .addEventListener("click", addUser);
-    document.querySelector(UISelectors.modal).style.display = 'none';
+    document.querySelector(UISelectors.modal).style.display = "none";
 
-    document.querySelector(UISelectors.userList).addEventListener('click', deleteUser)
-  };
+    document
+      .querySelector(UISelectors.userList)
+      .addEventListener("click", clickUpdateUser);
 
-  function deleteUser(e){
-    
-    let confirm = confirm("Do you want to delete a user?");
-    confirm
-    if(e.target.classList.contains('delete-user')){
+    document
+      .querySelector(UISelectors.userList)
+      .addEventListener("click", deleteUser);
+  
+    document.querySelector(UISelectors.updateUserBtn).addEventListener('click', updateUser)
+      
+    };
 
-      const id = e.target.parentNode.parentNode.firstElementChild.textContent
-      ItemCtrl.deleteUser(id);
-      e.target.parentNode.parentNode.remove();
-      console.log("can you see me")
+  function clickUpdateUser(e) {
+    if (e.target.classList.contains("update-user")) {
+      const idToUpdate = e.target.parentNode.parentNode.firstElementChild.textContent;
+      UICtrl.updateUserToModal(idToUpdate);
+    }
+  }
+
+  function updateUser(e){
+    let idToUpdate = e.target.id;
+    idToUpdate = parseInt(idToUpdate);
+    const getUpdateUserInputs = UICtrl.getUserInputs();
+    // const found = ItemCtrl.updateUser(idToUpdate);
+
+    const updatedUsers = ItemCtrl.updateUserList(idToUpdate,getUpdateUserInputs);
+    UICtrl.updateUserListToUI(updatedUsers);
+    UICtrl.hideModal();
+  }
+
+  function deleteUser(e) {
+    if (e.target.classList.contains("delete-user")) {
+      if (confirm("Do you want to delete a user?")) {
+        const id = e.target.parentNode.parentNode.firstElementChild.textContent;
+        ItemCtrl.deleteUser(id);
+        e.target.parentNode.parentNode.remove();
+      }
     }
   }
 
   function addUser() {
     const inputs = UICtrl.getUserInputs();
-    const newUser = ItemCtrl.addUser(
-      inputs.name,
-      inputs.age,
-      inputs.address,
-      inputs.category
-    );
-    UICtrl.addUserToList(newUser);
+    if (inputs.name.trim() === "") {
+      alert("Please fill the name.");
+    } else if (inputs.age.trim() === "") {
+      alert("Please fill the age")
+    } else if (inputs.address.trim() === "") {
+      alert("Please fill the address");
+    } else if (inputs.category.trim() === ''){
+      alert('Please fill the category'); 
+    } else {
+      const newUser = ItemCtrl.addUser(
+        inputs.name,
+        inputs.age,
+        inputs.address,
+        inputs.category
+      );
+      UICtrl.addUserToList(newUser);
+      UICtrl.clearInputs();
+      UICtrl.hideModal();
+    }
+
+    
   }
 
   function hideModal() {
+    UICtrl.clearInputs();
     UICtrl.hideModal();
   }
 
