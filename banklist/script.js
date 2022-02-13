@@ -90,6 +90,13 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
+const calPrintBalance = function(movements = []){
+  const balance = movements.reduce((acc, mov) =>acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+}
+
+calPrintBalance(account1.movements)
+
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
@@ -105,7 +112,7 @@ const createUsernames = function (accs) {
 };
 
 createUsernames(accounts);
-console.log(accounts)
+
 
 const eurToUsd = 1.1;
 
@@ -143,5 +150,22 @@ for(const mov of movements){
 }
 
 const withdrawls = movements.filter(mov => mov < 0);
-console.log('@withdrawals', withdrawls)
-console.log('@depositsFor', depositsFor)
+console.log('@withdrawals', withdrawls);
+console.log('@depositsFor', depositsFor);
+
+// accumulator => SNOWBALL
+const balance = movements.reduce((acc, cur) => acc + cur ,100);
+console.log('@balance :', balance)
+
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log('@balance2', balance2);
+
+// Maximum value 가장 큰 거래 금액;
+const max = movements.reduce((acc, mov) => {
+  if(acc > mov)
+    return acc;
+    else 
+    return mov;
+}, movements[0])
+console.log('@max :', max)
