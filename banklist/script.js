@@ -73,29 +73,60 @@ const currencies = new Map([
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-const displayMovements = function(movements){
-  containerMovements.innerHTML = ''
-  movements.forEach(function(mov, i){
- 
-    const type = mov > 0 ? "deposit" : "withdrawal"
+const displayMovements = function (movements) {
+  containerMovements.innerHTML = '';
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
     <div class="movements__row">
-          <div class="movements__type movements__type--${type}">${i+1} ${type}</div>
+          <div class="movements__type movements__type--${type}">${
+      i + 1
+    } ${type}</div>
           <div class="movements__value">${mov}</div>
         </div>
-    `
-    containerMovements.insertAdjacentHTML('beforeend', html)
-  })
+    `;
+    containerMovements.insertAdjacentHTML('beforeend', html);
+  });
+};
+displayMovements(account1.movements);
+
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => {
+        console.log('@name:', name)
+        console.log('@name[0]:', name[0])
+        return name[0]
+      })
+      .join('');
+  });
+};
+
+createUsernames(accounts);
+console.log(accounts)
+
+const eurToUsd = 1.1;
+
+const movementsUSD = movements.map(mov => mov * eurToUsd);
+
+console.log(movements);
+console.log('@movementsUSD :', movementsUSD );
+
+const movementsUSDfor = [];
+for (const mov of movements) {
+  movementsUSDfor.push(mov * eurToUsd);
 }
 
-displayMovements(account1.movements)
+console.log(movementsUSDfor);
 
+const movementsDescriptions = movements.map((mov, i) => {
+  if (mov > 0) {
+    return `Movement ${i + 1}: You deposited ${mov}`;
+  } else {
+    return `Movement ${i + 1}: You withdrew ${Math.abs(mov)}`;
+  }
+});
 
-
-// for (const [i,movement] of movements.entries()){
-//   if(movement >0){
-//     console.log(`${i+1}: You deposited ${movement}`)
-//   } else {
-//     console.log(`${i+1}: You withdrew ${Math.abs(movement)}`)
-//   }
-// }
+console.log(movementsDescriptions);
