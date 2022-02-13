@@ -130,3 +130,18 @@ const movementsDescriptions = movements.map((mov, i) => {
 });
 
 console.log(movementsDescriptions);
+
+const deposits = movements.filter(function(mov){
+  return mov > 0;
+})
+
+console.log('@deposits :' , deposits);
+
+const depositsFor = [];
+for(const mov of movements){
+  if(mov > 0) depositsFor.push(mov);
+}
+
+const withdrawls = movements.filter(mov => mov < 0);
+console.log('@withdrawals', withdrawls)
+console.log('@depositsFor', depositsFor)
