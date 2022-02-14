@@ -169,3 +169,11 @@ const max = movements.reduce((acc, mov) => {
     return mov;
 }, movements[0])
 console.log('@max :', max)
+
+
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov,0)
+
+  console.log('@totalDepositsUSD', totalDepositsUSD)
