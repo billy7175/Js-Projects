@@ -101,7 +101,12 @@ const calcDisplaySummary = function (){
   const incomes = movements
     .filter(mov => mov >0)
     .reduce((acc, mov) => acc+mov,0);
-    labelSumIn.textContent = `${incomes}` 
+    labelSumIn.textContent = `${incomes}$` 
+
+  const outs = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov)=> acc + mov,0)
+    labelSumOut.textContent = `${Math.abs(outs)}$`
 }
 calcDisplaySummary(account1.movements)
 
