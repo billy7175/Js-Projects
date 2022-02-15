@@ -97,6 +97,14 @@ const calPrintBalance = function(movements = []){
 
 calPrintBalance(account1.movements)
 
+const calcDisplaySummary = function (){
+  const incomes = movements
+    .filter(mov => mov >0)
+    .reduce((acc, mov) => acc+mov,0);
+    labelSumIn.textContent = `${incomes}` 
+}
+calcDisplaySummary(account1.movements)
+
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
