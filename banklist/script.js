@@ -199,4 +199,9 @@ const totalDepositsUSD = movements
   .map(mov => mov * eurToUsd)
   .reduce((acc, mov) => acc + mov,0)
 
-  console.log('@totalDepositsUSD', totalDepositsUSD)
+  console.log('@totalDepositsUSD', totalDepositsUSD);
+
+const firstWithdrawal = movements.find(mov => mov < 0);
+console.log('@movements',movements);
+console.log('@firstWithdrawal', firstWithdrawal);
+
