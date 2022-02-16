@@ -133,8 +133,18 @@ const createUsernames = function (accs) {
       .join('');
   });
 };
-
 createUsernames(accounts);
+
+
+let currentAccount;
+btnLogin.addEventListener('click', function(e){
+  e.preventDefault();
+
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
+  if(currentAccount.pin === Number(inputLoginPin.value)){
+    console.log('LOGIN')
+  }
+})
 
 
 const eurToUsd = 1.1;
