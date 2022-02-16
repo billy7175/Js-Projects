@@ -111,6 +111,10 @@ const calcDisplaySummary = function (){
   const interest = movements 
     .filter(mov => mov > 0)
     .map(deposit => (deposit *1.2) / 100)
+    .filter((int) => {
+      // 이자율이 1달러 이상일떄만 지급;
+      return int >= 1;
+    })
     .reduce((acc, int) => acc + int, 0);
     labelSumInterest.textContent = `${interest}`
 }
