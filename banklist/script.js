@@ -88,14 +88,13 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('beforeend', html);
   });
 };
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
-const calPrintBalance = function(movements = []){
+const calDisplayBalance = function(movements = []){
   const balance = movements.reduce((acc, mov) =>acc + mov, 0);
   labelBalance.textContent = `${balance} EUR`;
 }
 
-calPrintBalance(account1.movements)
 
 const calcDisplaySummary = function (){
   const incomes = movements
@@ -118,7 +117,7 @@ const calcDisplaySummary = function (){
     .reduce((acc, int) => acc + int, 0);
     labelSumInterest.textContent = `${interest}`
 }
-calcDisplaySummary(account1.movements)
+// calcDisplaySummary(account1.movements)
 
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
@@ -143,7 +142,19 @@ btnLogin.addEventListener('click', function(e){
   currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
   if(currentAccount.pin === Number(inputLoginPin.value)){
     console.log('LOGIN')
+    // Display UI and Message
+    labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ')[0]}`
+    containerApp.style.opacity =100;
+    // Display Movements
+    displayMovements(currentAccount.movements)
+    // Display Balance
+    calDisplayBalance(currentAccount.movements)
+    // Display Summary
+    calcDisplaySummary(currentAccount.movements)
+  } else {
+    alert('Wrong!')
   }
+
 })
 
 
