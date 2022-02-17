@@ -71,7 +71,7 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
@@ -96,20 +96,20 @@ const calDisplayBalance = function(movements = []){
 }
 
 
-const calcDisplaySummary = function (){
-  const incomes = movements
+const calcDisplaySummary = function (account){
+  const incomes = account.movements
     .filter(mov => mov >0)
     .reduce((acc, mov) => acc+mov,0);
     labelSumIn.textContent = `${incomes}$`;
 
-  const outs = movements
+  const outs = account.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov)=> acc + mov,0)
     labelSumOut.textContent = `${Math.abs(outs)}$`;
   
-  const interest = movements 
+  const interest = account.movements 
     .filter(mov => mov > 0)
-    .map(deposit => (deposit *1.2) / 100)
+    .map(deposit => (deposit * account.interestRate) / 100)
     .filter((int) => {
       // 이자율이 1달러 이상일떄만 지급;
       return int >= 1;
@@ -140,94 +140,26 @@ btnLogin.addEventListener('click', function(e){
   e.preventDefault();
 
   currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
+  console.log('@currentAccount:', currentAccount)
   if(currentAccount.pin === Number(inputLoginPin.value)){
     console.log('LOGIN')
     // Display UI and Message
     labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ')[0]}`
     containerApp.style.opacity =100;
+
+    //Clear Two Input Fields at once; New Syntax;
+    inputLoginUsername.value = inputLoginPin.value = '' 
+    inputLoginPin.blur();
+
     // Display Movements
     displayMovements(currentAccount.movements)
     // Display Balance
     calDisplayBalance(currentAccount.movements)
     // Display Summary
-    calcDisplaySummary(currentAccount.movements)
+    calcDisplaySummary(currentAccount)
   } else {
     alert('Wrong!')
   }
 
 })
-
-
-const eurToUsd = 1.1;
-
-const movementsUSD = movements.map(mov => mov * eurToUsd);
-
-console.log(movements);
-console.log('@movementsUSD :', movementsUSD );
-
-const movementsUSDfor = [];
-for (const mov of movements) {
-  movementsUSDfor.push(mov * eurToUsd);
-}
-
-console.log(movementsUSDfor);
-
-const movementsDescriptions = movements.map((mov, i) => {
-  if (mov > 0) {
-    return `Movement ${i + 1}: You deposited ${mov}`;
-  } else {
-    return `Movement ${i + 1}: You withdrew ${Math.abs(mov)}`;
-  }
-});
-
-console.log(movementsDescriptions);
-
-const deposits = movements.filter(function(mov){
-  return mov > 0;
-})
-
-console.log('@deposits :' , deposits);
-
-const depositsFor = [];
-for(const mov of movements){
-  if(mov > 0) depositsFor.push(mov);
-}
-
-const withdrawls = movements.filter(mov => mov < 0);
-console.log('@withdrawals', withdrawls);
-console.log('@depositsFor', depositsFor);
-
-// accumulator => SNOWBALL
-const balance = movements.reduce((acc, cur) => acc + cur ,100);
-console.log('@balance :', balance)
-
-let balance2 = 0;
-for (const mov of movements) balance2 += mov;
-console.log('@balance2', balance2);
-
-// Maximum value 가장 큰 거래 금액;
-const max = movements.reduce((acc, mov) => {
-  if(acc > mov)
-    return acc;
-    else 
-    return mov;
-}, movements[0])
-console.log('@max :', max)
-
-
-const totalDepositsUSD = movements
-  .filter(mov => mov > 0)
-  .map(mov => mov * eurToUsd)
-  .reduce((acc, mov) => acc + mov,0)
-
-  console.log('@totalDepositsUSD', totalDepositsUSD);
-
-const firstWithdrawal = movements.find(mov => mov < 0);
-console.log('@movements',movements);
-console.log('@firstWithdrawal', firstWithdrawal);
-
-const account = accounts.find(acc => acc.owner === 'Jessica Davis');
-
-console.log(accounts)
-console.log(account)
 
