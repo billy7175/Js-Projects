@@ -194,5 +194,15 @@ btnTransfer.addEventListener('click', function(e){
 
 btnClose.addEventListener('click', function(e){
   e.preventDefault();
-  console.log('Delete');
+  console.log('@btnClose')
+  const isName = inputCloseUsername.value === currentAccount.username
+  const isPin = Number(inputClosePin.value) === currentAccount.pin
+  console.log('isName:', isName)
+  console.log('isPin', isPin)
+  if(isName && Number(inputClosePin.value) === currentAccount.pin){
+    const index = accounts.findIndex(acc => 
+      acc.username === currentAccount.username
+    )
+    console.log('Delete', index);
+  }
 })
