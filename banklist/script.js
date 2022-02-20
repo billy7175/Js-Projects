@@ -85,7 +85,7 @@ const displayMovements = function (movements) {
           <div class="movements__value">${mov}</div>
         </div>
     `;
-    containerMovements.insertAdjacentHTML('beforeend', html);
+    containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
 // displayMovements(account1.movements);
@@ -192,18 +192,34 @@ btnTransfer.addEventListener('click', function(e){
   }
 })
 
+btnLoan.addEventListener('click', function(e){
+  e.preventDefault();
+  
+  const amount = Number(inputLoanAmount.value);
+
+  if(amount > 0 && currentAccount.movements.some(mov => mov >= amount *0.1)){
+    currentAccount.movements.push(amount)
+    //Update UI
+    updateUI(currentAccount)
+  }
+  inputLoanAmount.value = '';
+})
+
 btnClose.addEventListener('click', function(e){
   e.preventDefault();
-  console.log('@btnClose')
   const isName = inputCloseUsername.value === currentAccount.username
   const isPin = Number(inputClosePin.value) === currentAccount.pin
-  console.log('isName:', isName)
-  console.log('isPin', isPin)
-  if(isName && Number(inputClosePin.value) === currentAccount.pin){
+  if(isName && isPin){
     const index = accounts.findIndex(acc => 
       acc.username === currentAccount.username
     )
     console.log('Delete', index);
+
+       // Delete account
+      //  accounts.splice(index, 1);
+
+       // Hide UI
+      //  containerApp.style.opacity = 0;
   }
   inputCloseUsername.value = inputClosePin.value = ''
 })
