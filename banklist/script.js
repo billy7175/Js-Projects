@@ -205,4 +205,5 @@ btnClose.addEventListener('click', function(e){
     )
     console.log('Delete', index);
   }
+  inputCloseUsername.value = inputClosePin.value = ''
 })
